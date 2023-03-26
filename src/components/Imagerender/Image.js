@@ -10,10 +10,6 @@ const Image = () => {
   const [totalResult, settotalResult] = useState(0);
   const [img, setImg] = useState("");
 
-  const submit = () => {
-   fetchMoreData();
-  };
-
   const fetchMoreData = async () => {
     let url = `https://pixabay.com/api/?key=34747400-f1e2efd17448c375ffc346561&q=${img}&per_page=20&image_type=photo`;
     console.log("urlll", url);
@@ -55,24 +51,16 @@ const Image = () => {
             <div class="d-flex" role="search">
               <input
                 class="form-control me-2"
-                type="search"
+                type="text"
                 placeholder="Search"
-                value={img}
                 onChange={(e) => setImg(e.target.value)}
                 aria-label="Search"
               />
-              <button
-                class="btn btn-outline-success"
-               
-                onClick={submit}
-              >
-                Search
-              </button>
             </div>
           </div>
         </div>
       </nav>
-      <div className="my-3"></div>
+      <div className="my-12"></div>
 
       <InfiniteScroll
         dataLength={articles.length}
@@ -82,17 +70,27 @@ const Image = () => {
       >
         <div className="container-fluid">
           <div className="row">
-            {articles.map((element) => {
-              return (
-                <div className="col-md-4" key={element.pageURL}>
-                  <ImageItem
-                    title={element.tags ? element.tags : ""}
-                    imageurl={element.previewURL}
-                    source={element.user}
-                  />
-                </div>
-              );
-            })}
+            {articles
+              .filter((value) => {
+                if (img === "") {
+                  return value;
+                } else if (
+                  value.tags.toLowerCase().includes(img.toLowerCase())
+                ) {
+                  return value;
+                }
+              })
+              .map((element) => {
+                return (
+                  <div className="col-md-4" key={element.pageURL}>
+                    <ImageItem
+                      title={element.tags ? element.tags : ""}
+                      imageurl={element.previewURL}
+                      source={element.user}
+                    />
+                  </div>
+                );
+              })}
           </div>
         </div>
       </InfiniteScroll>
