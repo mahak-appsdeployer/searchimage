@@ -1,13 +1,7 @@
-
-import './App.css';
-import Image from './components/Imagerender/Image';
+import Image from "./components/Imagerender/Image";
 
 function App() {
-  return (
-   
- <Image/>
-  
-  );
+  return <Image />;
 }
 
 export default App;
